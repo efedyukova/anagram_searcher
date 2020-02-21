@@ -11,7 +11,7 @@ modified_dictionary = {}
 def create_dictionary():
     anagram_dictionary = request.json
     for word in anagram_dictionary:
-        modified_word = ''.join(sorted(word))
+        modified_word = ''.join(sorted(word.lower()))
         if modified_word in modified_dictionary:
             modified_dictionary[modified_word].append(word)
             modified_dictionary[modified_word] = list(set(modified_dictionary[modified_word]))
@@ -24,9 +24,7 @@ def create_dictionary():
 @app.route('/get', methods = ['GET'])
 def get_word():
     given_word = request.args.get('word')
-    mod_word = ''.join(sorted(given_word))
-    print (mod_word)
-    print(999)
+    mod_word = ''.join(sorted(given_word.lower()))
     if mod_word in modified_dictionary:
         return jsonify(modified_dictionary[mod_word])
     else:
